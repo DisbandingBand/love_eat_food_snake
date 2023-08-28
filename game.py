@@ -1,7 +1,6 @@
 import sys
-
 import pygame
-
+from setting import Settings
 
 class Game:
 
@@ -9,9 +8,9 @@ class Game:
 
     def __init__(self):
         pygame.init()
+        self.settings = Settings()
 
-        self.screen = pygame.display.set_mode((800,600))
-        self.bg_color = (230,230,230)
+        self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
 
     def run_game(self):
         while True:
@@ -19,8 +18,8 @@ class Game:
                 if event.type == pygame.QUIT:
                     sys.exit()
 
-        self.screen.fill(self.bg_color)
-        pygame.display.flip()
+            self.screen.fill(self.settings.bg_color)
+            pygame.display.flip()
 
 
 if __name__ == '__main__':
