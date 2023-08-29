@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 """创建设置类"""
@@ -21,5 +23,13 @@ class Settings:
         self.speed_multiple = 2
 
         """食物类设置"""
-        self.foodsize = (10,10)
+        self.foodwidth = 10
+        self.foodheight = 10
         self.foodcolor = (255,0,0)
+
+    def generatefoodpos(self):
+        x = random.randrange(0,800,10)
+        y = random.randrange(0,600,10)
+        position = (x,y)
+
+        return position

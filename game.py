@@ -25,6 +25,7 @@ class Game:
         while True:
             self.check_event()
             self.snakepart.move_snake()
+            self.iseatfood()
             self.update_screen()
 
 
@@ -59,11 +60,18 @@ class Game:
         self.screen.fill(self.settings.bg_color)
         """绘制蛇头"""
         self.snakepart.blitsnakehead()
-        self.foodpart.blitfood()
+
+        self.foodpart.drawfood()
         """设定帧率"""
         self.clock.tick(20)
         """刷新屏幕"""
         pygame.display.flip()
+
+    def iseatfood(self):
+        if self.snakepart.snakehead_rect.contains(self.foodpart.foodrect) == True:
+            self.foodpart.foodrect.x = self.settings.generatefoodpos()[0]
+            self.foodpart.foodrect.y = self.settings.generatefoodpos()[1]
+
 
 
 
