@@ -14,3 +14,5 @@ class Settings:
         """对蛇的设置在这一块"""
         self.snakeheadsquare = (20,20)
         self.snakeheadcolor = (15,48,135)
+        self.snakespeed = 5
+        self.direction = "RIGHT"
