@@ -2,6 +2,7 @@ import sys
 import pygame
 from setting import Settings
 from snakepart import SnakePart
+from foodpart import FoodPart
 
 class Game:
 
@@ -15,6 +16,7 @@ class Game:
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         """导入蛇的部分类，对于蛇头和蛇身的设置可以放在这里，这里因为需要导入屏幕，所以要放在self.screen的后面"""
         self.snakepart = SnakePart(self)
+        self.foodpart = FoodPart(self)
 
         """导入屏幕帧数函数"""
         self.clock = pygame.time.Clock()
@@ -57,8 +59,9 @@ class Game:
         self.screen.fill(self.settings.bg_color)
         """绘制蛇头"""
         self.snakepart.blitsnakehead()
+        self.foodpart.blitfood()
         """设定帧率"""
-        self.clock.tick(30)
+        self.clock.tick(20)
         """刷新屏幕"""
         pygame.display.flip()
 

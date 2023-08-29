@@ -17,5 +17,9 @@ class Settings:
 
         """控制类设置"""
         self.direction = "RIGHT"
-        self.speed = 3
+        self.speed = 5
         self.speed_multiple = 2
+
+        """食物类设置"""
+        self.foodsize = (10,10)
+        self.foodcolor = (255,0,0)
