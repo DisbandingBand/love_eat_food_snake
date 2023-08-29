@@ -1,9 +1,8 @@
 import sys
-import time
-
 import pygame
 from setting import Settings
 from snakepart import SnakePart
+from foodpart import FoodPart
 
 class Game:
 
@@ -17,15 +16,15 @@ class Game:
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         """导入蛇的部分类，对于蛇头和蛇身的设置可以放在这里，这里因为需要导入屏幕，所以要放在self.screen的后面"""
         self.snakepart = SnakePart(self)
-
-        """设定初始方向，具体可以在设置类里面改"""
-        self.direction = self.settings.direction
+        self.foodpart = FoodPart(self)
 
         """导入屏幕帧数函数"""
         self.clock = pygame.time.Clock()
+
     def run_game(self):
         while True:
             self.check_event()
+            self.snakepart.move_snake()
             self.update_screen()
 
 
@@ -34,15 +33,24 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+
+                """检测按键，上下左右，空格加速"""
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    self.direction = "RIGHT"
-                elif event.key == pygame.K_UP:
-                    self.direction = "UP"
-                elif event.key == pygame.K_LEFT:
-                    self.direction = "LEFT"
-                elif event.key == pygame.K_DOWN:
-                    self.direction = "DOWN"
+                if event.key == pygame.K_RIGHT and self.snakepart.direction != "LEFT":
+                    self.snakepart.direction = "RIGHT"
+                elif event.key == pygame.K_UP and self.snakepart.direction != "DOWN":
+                    self.snakepart.direction = "UP"
+                elif event.key == pygame.K_LEFT and self.snakepart.direction != "RIGHT":
+                    self.snakepart.direction = "LEFT"
+                elif event.key == pygame.K_DOWN and self.snakepart.direction != "UP":
+                    self.snakepart.direction = "DOWN"
+                elif event.key == pygame.K_SPACE:
+                    self.snakepart.double_spped = True
+
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    self.snakepart.double_spped = False
+
 
     def update_screen(self):
         """定义更新屏幕函数"""
@@ -51,24 +59,11 @@ class Game:
         self.screen.fill(self.settings.bg_color)
         """绘制蛇头"""
         self.snakepart.blitsnakehead()
-        """绘制蛇的移动"""
-        self.move_snake()
+        self.foodpart.blitfood()
         """设定帧率"""
-        self.clock.tick(30)
-
+        self.clock.tick(20)
         """刷新屏幕"""
         pygame.display.flip()
-
-    def move_snake(self):
-        """定义一个控制蛇移动方向的函数"""
-        if self.direction == "RIGHT":
-            self.snakepart.rect.x += 3
-        elif self.direction == "LEFT":
-            self.snakepart.rect.x -= 3
-        elif self.direction == "DOWN":
-            self.snakepart.rect.y += 3
-        elif self.direction == "UP":
-            self.snakepart.rect.y -= 3
 
 
 

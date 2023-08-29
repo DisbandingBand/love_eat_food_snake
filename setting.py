@@ -14,5 +14,12 @@ class Settings:
         """对蛇的设置在这一块"""
         self.snakeheadsquare = (20,20)
         self.snakeheadcolor = (15,48,135)
-        self.snakespeed = 5
+
+        """控制类设置"""
         self.direction = "RIGHT"
+        self.speed = 5
+        self.speed_multiple = 2
+
+        """食物类设置"""
+        self.foodsize = (10,10)
+        self.foodcolor = (255,0,0)
