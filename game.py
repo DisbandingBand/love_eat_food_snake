@@ -21,6 +21,8 @@ class Game:
         """设定初始方向，具体可以在设置类里面改"""
         self.direction = self.settings.direction
 
+        self.double_spped = False
+
         """导入屏幕帧数函数"""
         self.clock = pygame.time.Clock()
     def run_game(self):
@@ -35,14 +37,23 @@ class Game:
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
+
+                if event.key == pygame.K_RIGHT and self.direction != "LEFT":
                     self.direction = "RIGHT"
-                elif event.key == pygame.K_UP:
+                elif event.key == pygame.K_UP and self.direction != "DOWN":
                     self.direction = "UP"
-                elif event.key == pygame.K_LEFT:
+                elif event.key == pygame.K_LEFT and self.direction != "RIGHT":
                     self.direction = "LEFT"
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_DOWN and self.direction != "UP":
                     self.direction = "DOWN"
+                elif event.key == pygame.K_SPACE:
+                    self.double_spped = True
+
+            elif event.type == pygame.KEYUP:
+
+                if event.key == pygame.K_SPACE:
+                    self.double_spped = False
+
 
     def update_screen(self):
         """定义更新屏幕函数"""
@@ -62,13 +73,25 @@ class Game:
     def move_snake(self):
         """定义一个控制蛇移动方向的函数"""
         if self.direction == "RIGHT":
-            self.snakepart.rect.x += 3
+            if self.double_spped == True:
+                self.snakepart.rect.x += self.settings.speed * self.settings.speed_multiple
+            elif self.double_spped == False:
+                self.snakepart.rect.x += self.settings.speed
         elif self.direction == "LEFT":
-            self.snakepart.rect.x -= 3
+            if self.double_spped == True:
+                self.snakepart.rect.x -= self.settings.speed * self.settings.speed_multiple
+            elif self.double_spped == False:
+                self.snakepart.rect.x -= self.settings.speed
         elif self.direction == "DOWN":
-            self.snakepart.rect.y += 3
+            if self.double_spped == True:
+                self.snakepart.rect.y += self.settings.speed * self.settings.speed_multiple
+            elif self.double_spped == False:
+                self.snakepart.rect.y += self.settings.speed
         elif self.direction == "UP":
-            self.snakepart.rect.y -= 3
+            if self.double_spped == True:
+                self.snakepart.rect.y -= self.settings.speed * self.settings.speed_multiple
+            elif self.double_spped == False:
+                self.snakepart.rect.y -= self.settings.speed
 
 
 
