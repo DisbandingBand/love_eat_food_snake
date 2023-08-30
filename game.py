@@ -22,10 +22,14 @@ class Game:
         self.clock = pygame.time.Clock()
 
     def run_game(self):
+        print("test:原神启动")
         while True:
             self.check_event()
             self.snakepart.move_snake()
-            self.iseatfood()
+            if self.snakepart.snakehead_rect.colliderect(self.foodpart.foodrect):
+                # colliderect判断蛇头和食物是否发生碰撞
+                self.foodpart.iseatfood()
+            # self.iseatfood()
             self.update_screen()
 
 
@@ -67,13 +71,12 @@ class Game:
         """刷新屏幕"""
         pygame.display.flip()
 
+'''    
     def iseatfood(self):
-        if self.snakepart.snakehead_rect.contains(self.foodpart.foodrect) == True:
+        if self.snakepart.snakehead_rect.colliderect(self.foodpart.foodrect) == True:
             self.foodpart.foodrect.x = self.settings.generatefoodpos()[0]
             self.foodpart.foodrect.y = self.settings.generatefoodpos()[1]
-
-
-
+'''    
 
 
 if __name__ == '__main__':

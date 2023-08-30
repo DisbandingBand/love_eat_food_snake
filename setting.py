@@ -28,8 +28,7 @@ class Settings:
         self.foodcolor = (255,0,0)
 
     def generatefoodpos(self):
-        x = random.randrange(0,800,10)
-        y = random.randrange(0,600,10)
-        position = (x,y)
-
+        x = random.randrange(0, self.screen_width - self.foodwidth)
+        y = random.randrange(0, self.screen_height - self.foodheight)
+        position = (x, y)
         return position
