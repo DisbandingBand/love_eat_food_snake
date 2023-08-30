@@ -71,13 +71,6 @@ class Game:
         """刷新屏幕"""
         pygame.display.flip()
 
-'''    
-    def iseatfood(self):
-        if self.snakepart.snakehead_rect.colliderect(self.foodpart.foodrect) == True:
-            self.foodpart.foodrect.x = self.settings.generatefoodpos()[0]
-            self.foodpart.foodrect.y = self.settings.generatefoodpos()[1]
-'''    
-
 
 if __name__ == '__main__':
     glusnake = Game()
