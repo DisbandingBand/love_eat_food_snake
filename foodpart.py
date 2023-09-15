@@ -21,7 +21,4 @@ class FoodPart:
     def drawfood(self):
         pygame.draw.rect(self.screen,self.color,self.foodrect)
 
-    def iseatfood(self):
-        if self.snakepart.snakehead_rect.contains(self.foodrect) == True:
-            self.foodrect.x = self.settings.generatefoodpos()[0]
-            self.foodrect.y = self.settings.generatefoodpos()[1]
+

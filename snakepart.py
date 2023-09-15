@@ -16,7 +16,7 @@ class SnakePart:
         self.snakeheadcolor = (15,48,135)
         self.direction = self.settings.RIGHT
         self.double_speed = False
-        self.snakebody_rect = [pygame.Rect(0,0,0,0)] * 20
+        self.snakebody_rect = [pygame.Rect(0,0,0,0)] * 4
         self.snakehead_rect = pygame.Rect(0,0,20,20)
         self.game_over = False
 

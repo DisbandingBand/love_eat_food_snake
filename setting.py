@@ -23,13 +23,13 @@ class Settings:
 
         self.UP, self.DOWN, self.LEFT, self.RIGHT = (0, -20), (0, 20), (-20, 0), (20, 0)
         """食物类设置"""
-        self.foodwidth = 10
-        self.foodheight = 10
+        self.foodwidth = 20
+        self.foodheight = 20
         self.foodcolor = (255,0,0)
 
     def generatefoodpos(self):
-        x = random.randrange(0,800,10)
-        y = random.randrange(0,600,10)
+        x = random.randrange(0,800,20)
+        y = random.randrange(0,600,20)
         position = (x,y)
 
         return position
