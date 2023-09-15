@@ -1,56 +1,82 @@
-import pygame
 import sys
+import pygame
+from setting import Settings
+from snakepart import SnakePart
+from foodpart import FoodPart
+
+
 class Game:
 
 
 
     def __init__(self):
         pygame.init()
-        screen_width = 800
-        screen_height = 600
-        self.screen = pygame.display.set_mode((screen_width,screen_height))
-        self.bg_color = (230,230,230)
-        self.snake_x = screen_width / 2
-        self.snake_y = screen_height / 2
-        self.snakelist = [[self.snake_x,self.snake_y]]
-        self.snakeblockcolor = (15,48,135)
-        self.direction = 'RIGHT'
+        """导入设置类，对于屏幕或者蛇的什么设置可以放在这里"""
+        self.settings = Settings()
+        """绘制屏幕，长宽比在设置类中"""
+        self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
+        """导入蛇的部分类，对于蛇头和蛇身的设置可以放在这里，这里因为需要导入屏幕，所以要放在self.screen的后面"""
+
+
+        self.snakepart = SnakePart(self)
+        self.foodpart = FoodPart(self)
+
+        """导入屏幕帧数函数"""
         self.clock = pygame.time.Clock()
-        self.speed = 20
+
     def run_game(self):
-
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+            self.check_event()
 
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RIGHT and self.direction != "LEFT":
-                        self.direction = "RIGHT"
-                    elif event.key == pygame.K_UP and self.direction != "DOWN":
-                        self.direction = "UP"
-                    elif event.key == pygame.K_LEFT and self.direction != "RIGHT":
-                        self.direction = "LEFT"
-                    elif event.key == pygame.K_DOWN and self.direction != "UP":
-                        self.direction = "DOWN"
+            self.snakepart.move_snake()
+            self.snakepart._update()
+            self.iseatfood()
+            self.update_screen()
 
 
-            if self.direction == 'LEFT':
-                self.snake_x -= self.speed
-            elif self.direction == 'RIGHT':
-                self.snake_x += self.speed
-            elif self.direction == 'UP':
-                self.snake_y -= self.speed
-            elif self.direction == 'DOWN':
-                self.snake_y += self.speed
+    def check_event(self):
+        """定义事件检查函数，如果检测到单击了关闭按钮，退出游戏"""
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
 
-            self.screen.fill(self.bg_color)
+                """检测按键，上下左右"""
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT and self.snakepart.direction != self.settings.LEFT:
+                    self.snakepart.direction = self.settings.RIGHT
+                elif event.key == pygame.K_UP and self.snakepart.direction != self.settings.DOWN:
+                    self.snakepart.direction = self.settings.UP
+                elif event.key == pygame.K_LEFT and self.snakepart.direction != self.settings.RIGHT:
+                    self.snakepart.direction = self.settings.LEFT
+                elif event.key == pygame.K_DOWN and self.snakepart.direction != self.settings.UP:
+                    self.snakepart.direction = self.settings.DOWN
+                elif event.key == pygame.K_SPACE:
+                    self.snakepart.double_speed = True
 
-            for i in self.snakelist:
-                pygame.draw.rect(self.screen,self.snakeblockcolor,[i[0],i[1],20,20])
 
-            self.clock.tick(10)
-            pygame.display.flip()
+
+
+
+    def update_screen(self):
+        """定义更新屏幕函数"""
+
+        """填充屏幕颜色，颜色选项在设置类中"""
+        self.screen.fill(self.settings.bg_color)
+
+        self.snakepart.drawsnakebody()
+        self.snakepart.drawsnakehead()
+        self.foodpart.drawfood()
+        """设定帧率"""
+        self.clock.tick(5)
+        """刷新屏幕"""
+        pygame.display.flip()
+
+    def iseatfood(self):
+        if self.snakepart.snakehead_rect.contains(self.foodpart.foodrect) == True:
+            self.foodpart.foodrect.x = self.settings.generatefoodpos()[0]
+            self.foodpart.foodrect.y = self.settings.generatefoodpos()[1]
+
+            self.snakepart.snakebody_rect.append(self.snakepart.snakebody_rect[-1])
 
 
 
