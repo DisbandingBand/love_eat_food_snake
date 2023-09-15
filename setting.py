@@ -18,10 +18,10 @@ class Settings:
         self.snakeheadcolor = (15,48,135)
 
         """控制类设置"""
-        self.direction = "RIGHT"
-        self.speed = 5
-        self.speed_multiple = 2
 
+
+
+        self.UP, self.DOWN, self.LEFT, self.RIGHT = (0, -20), (0, 20), (-20, 0), (20, 0)
         """食物类设置"""
         self.foodwidth = 10
         self.foodheight = 10
@@ -33,3 +33,4 @@ class Settings:
         position = (x,y)
 
         return position
+
